@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ICONOS (no tocar) -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h7M9 17h7"/></symbol>
+  <symbol id="i-dollar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v12M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3 6 1.7 6 4.7 0 1.3-1.3 2.5-3 2.5s-3-1.1-3-2.5"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+</svg>
+
+<div class="app">
+
+  <!-- MENÚ LATERAL -->
+  <aside class="lateral">
+    <div class="marca">Tu Tienda</div>
+
+    <nav class="menu">
+      <button class="menu-item activo" data-vista="ventas"><svg class="ico"><use href="#i-cart"/></svg>Ventas</button>
+      <button class="menu-item" data-vista="resumen"><svg class="ico"><use href="#i-doc"/></svg>Resumen</button>
+      <button class="menu-item" data-vista="ganancias"><svg class="ico"><use href="#i-dollar"/></svg>Ganancias</button>
+      <button class="menu-item" data-vista="inventario"><svg class="ico"><use href="#i-box"/></svg>Inventario</button>
+    </nav>
+
+    <p class="lema">Tu negocio,<br>en buenas manos</p>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <div class="contenido">
+
+    <header class="barra-superior">
+      <div>
+        <h1 id="titulo">Ventas</h1>
+        <p class="sub" id="fecha"></p>
+      </div>
+      <div class="usuario">
+        <svg class="ico"><use href="#i-user"/></svg>
+        <div>
+          <strong>Tienda Central</strong>
+          <span>Administrador</span>
+        </div>
+        <button class="btn-icono" data-pronto="Configuración" aria-label="Configuración"><svg class="ico"><use href="#i-gear"/></svg></button>
+      </div>
+    </header>
+
+    <!-- ================= VISTA: VENTAS ================= -->
+    <div class="cuerpo vista" id="vista-ventas">
+
+      <section class="izquierda">
+
+        <label class="buscador">
+          <svg class="ico"><use href="#i-search"/></svg>
+          <input id="buscar" placeholder="Buscar producto o escanear código" autofocus autocomplete="off">
+        </label>
+
+        <div class="ticket">
+          <div class="ticket-cabecera">
+            <strong>Tienda Central</strong>
+            <span>Ticket <b id="numeroTicket">0001</b></span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th><span class="sr">Quitar</span></th>
+              </tr>
+            </thead>
+            <tbody id="lineas"></tbody>
+          </table>
+        </div>
+
+        <div class="cobro-fila">
+          <div class="etiqueta-total">
+            <span>Total</span>
+            <strong id="total">$0.00</strong>
+          </div>
+          <label class="campo">
+            <span>Efectivo</span>
+            <input id="efectivo" type="number" step="0.01" min="0" placeholder="0.00" inputmode="decimal">
+          </label>
+          <div class="campo">
+            <span>Cambio</span>
+            <strong id="cambio">$0.00</strong>
+          </div>
+        </div>
+
+      </section>
+
+      <aside class="derecha">
+        <div class="escaner">
+          <div class="escaner-cabecera">
+            <span>Escáner</span>
+            <span class="estado">Listo</span>
+          </div>
+          <div class="visor">
+            <div class="codigo"></div>
+            <div class="laser"></div>
+            <div class="esquina a"></div><div class="esquina b"></div>
+            <div class="esquina c"></div><div class="esquina d"></div>
+          </div>
+          <button class="btn-escanear" id="btnEscanear">Escanear con la cámara</button>
+        </div>
+
+        <button class="btn-cobrar" id="btnCobrar">Cobrar</button>
+        <button class="btn-cancelar" id="btnCancelar">Cancelar venta</button>
+      </aside>
+
+    </div>
+
+    <!-- ================= VISTA: RESUMEN ================= -->
+    <section class="vista vista-simple oculta" id="vista-resumen">
+      <label class="barra-fecha">Día
+        <input type="date" class="input-dia">
+      </label>
+
+      <div class="tarjetas">
+        <div class="dato"><span>Ventas realizadas</span><strong id="resVentas">0</strong></div>
+        <div class="dato"><span>Total vendido</span><strong id="resTotal">$0.00</strong></div>
+        <div class="dato"><span>Costo de lo vendido</span><strong id="resCosto">$0.00</strong></div>
+        <div class="dato destacado"><span>Ganancia del día</span><strong id="resGanancia">$0.00</strong></div>
+      </div>
+
+      <div class="panel">
+        <h2>Ventas del día</h2>
+        <div class="tabla-scroll">
+          <table class="tabla-datos">
+            <thead>
+              <tr><th>Ticket</th><th>Hora</th><th>Unidades</th><th>Total</th><th>Ganancia</th></tr>
+            </thead>
+            <tbody id="tablaTickets"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VISTA: GANANCIAS ================= -->
+    <section class="vista vista-simple oculta" id="vista-ganancias">
+      <label class="barra-fecha">Día
+        <input type="date" class="input-dia">
+      </label>
+
+      <div class="tarjetas tarjetas-2">
+        <div class="dato destacado"><span>Ganancia total</span><strong id="ganTotal">$0.00</strong></div>
+        <div class="dato"><span>Producto que más ganancia dejó</span><strong class="texto" id="ganTop">Sin ventas</strong></div>
+      </div>
+
+      <div class="panel">
+        <h2>Ganancia por producto</h2>
+        <div class="tabla-scroll">
+          <table class="tabla-datos">
+            <thead>
+              <tr><th>Producto</th><th>Unidades</th><th>Vendido</th><th>Costo</th><th>Ganancia</th></tr>
+            </thead>
+            <tbody id="tablaGanancias"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VISTA: INVENTARIO ================= -->
+    <section class="vista inventario oculta" id="vista-inventario">
+
+      <div class="panel">
+        <h2 id="tituloForm">Agregar producto</h2>
+        <form class="formulario" id="formProducto" autocomplete="off">
+          <label>Código de barras
+            <input id="fCodigo" required>
+          </label>
+          <label>Producto
+            <input id="fNombre" placeholder="Ej: Coca Cola" required>
+          </label>
+          <div class="fila-doble">
+            <label>Precio inicial
+              <input id="fCosto" type="number" step="0.01" min="0" inputmode="decimal" placeholder="1.00" required>
+            </label>
+            <label>Precio de venta
+              <input id="fPrecio" type="number" step="0.01" min="0" inputmode="decimal" placeholder="1.25" required>
+            </label>
+          </div>
+          <div class="ganancia-calculada" id="gananciaCalc">
+            <span>Ganancia por unidad</span>
+            <strong id="fGanancia">$0.00</strong>
+          </div>
+          <div class="fila-doble">
+            <label>Stock
+              <input id="fStock" type="number" step="1" min="0" inputmode="numeric" placeholder="24" required>
+            </label>
+            <label>Avisar cuando queden
+              <input id="fMinimo" type="number" step="1" min="0" inputmode="numeric" placeholder="6">
+            </label>
+          </div>
+          <button type="submit" class="btn-principal" id="btnGuardar">Guardar producto</button>
+          <button type="button" class="btn-secundario oculta" id="btnCancelarEdicion">Cancelar edición</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>Inventario</h2>
+        <label class="buscador">
+          <svg class="ico"><use href="#i-search"/></svg>
+          <input id="filtroInventario" placeholder="Buscar en el inventario" autocomplete="off">
+        </label>
+        <p class="nota" id="notaInventario"></p>
+        <div class="tabla-scroll">
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Precio inicial</th>
+                <th>Precio de venta</th>
+                <th>Ganancia</th>
+                <th>Stock</th>
+                <th><span class="sr">Acciones</span></th>
+              </tr>
+            </thead>
+            <tbody id="tablaInventario"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<div class="aviso" id="aviso" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
